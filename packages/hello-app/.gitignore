@@ -1,0 +1,10 @@
+.env
+!.env.example
+.venv
+
+node_modules
+cdk.out
+.vscode
+
+my_key.pem
+*.pem
