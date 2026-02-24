@@ -1,39 +1,21 @@
-import {
-  createRootRoute,
-  createRoute,
-  createRouter,
-  Outlet,
-} from "@tanstack/react-router"
+import { createRouter as createTanStackRouter } from '@tanstack/react-router'
+import { routeTree } from './routeTree.gen'
 
-import HomePage from "./routes/index"
 
 // Root layout
-const rootRoute = createRootRoute({
-  component: () => (
-    <div>
-      <Outlet />
-    </div>
-  ),
-})
+export function getRouter() {
+  const router = createTanStackRouter({
+    routeTree,
+    scrollRestoration: true,
+  })
 
-// Index route (/)
-const indexRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/",
-  component: HomePage,
-})
+  return router
+}
 
-// Build route tree
-const routeTree = rootRoute.addChildren([indexRoute])
-
-// Create router
-export const router = createRouter({
-  routeTree,
-})
 
 // Type registration (IMPORTANT for TypeScript)
 declare module "@tanstack/react-router" {
   interface Register {
-    router: typeof router
+    router: ReturnType<typeof getRouter>
   }
 }
