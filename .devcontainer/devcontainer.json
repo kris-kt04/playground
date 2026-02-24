@@ -12,7 +12,8 @@
         "charliermarsh.ruff",
         "mtxr.sqltools",
         "mtxr.sqltools-driver-pg",
-        "astro-build.astro-vscode"
+        "astro-build.astro-vscode",
+        "prisma.prisma"
       ]
     }
   }
