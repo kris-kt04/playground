@@ -5,8 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -14,7 +13,51 @@ datasource db {
 }
 
 model Organization {
+  id          String        @id @default(cuid())
+  name        String
+  createdAt   DateTime      @default(now())
+  memberships Membership[]
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  memberships Membership[]  // 👈 required
+  sessions  Session[]
+  accounts  Account[]
+}
+
+model Session {
   id        String   @id @default(cuid())
-  name      String
-  createdAt DateTime @default(now())
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  providerId        String
+  providerAccountId String
+  password          String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, providerAccountId])
+}
+
+model Membership {
+  id             String        @id @default(cuid())
+  role           String        @default("MEMBER")
+
+  userId         String
+  organizationId String
+
+  user           User          @relation(fields: [userId], references: [id])
+  organization   Organization  @relation(fields: [organizationId], references: [id])
+
+  @@unique([userId, organizationId])
 }

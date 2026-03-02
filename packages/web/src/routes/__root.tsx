@@ -51,28 +51,19 @@ const Providers = ({ children }: Readonly<{ children: ReactNode }>) => {
 }
 
 function RootComponent() {
-  return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
-  )
-}
-
-function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
   const theme = Route.useLoaderData();
 
-
   return (
-    <html className={theme} suppressHydrationWarning >
+    <html className={theme} suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body>
         <Providers>
-          {children}
+          <Outlet />
         </Providers>
         <Scripts />
       </body>
     </html>
-  );
+  )
 }

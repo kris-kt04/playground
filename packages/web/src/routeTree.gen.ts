@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as HiRouteImport } from './routes/hi'
 import { Route as HelloRouteImport } from './routes/hello'
 
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HiRoute = HiRouteImport.update({
   id: '/hi',
   path: '/hi',
@@ -26,31 +32,42 @@ const HelloRoute = HelloRouteImport.update({
 export interface FileRoutesByFullPath {
   '/hello': typeof HelloRoute
   '/hi': typeof HiRoute
+  '/login': typeof LoginRoute
 }
 export interface FileRoutesByTo {
   '/hello': typeof HelloRoute
   '/hi': typeof HiRoute
+  '/login': typeof LoginRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/hello': typeof HelloRoute
   '/hi': typeof HiRoute
+  '/login': typeof LoginRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/hello' | '/hi'
+  fullPaths: '/hello' | '/hi' | '/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/hello' | '/hi'
-  id: '__root__' | '/hello' | '/hi'
+  to: '/hello' | '/hi' | '/login'
+  id: '__root__' | '/hello' | '/hi' | '/login'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   HelloRoute: typeof HelloRoute
   HiRoute: typeof HiRoute
+  LoginRoute: typeof LoginRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hi': {
       id: '/hi'
       path: '/hi'
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   HelloRoute: HelloRoute,
   HiRoute: HiRoute,
+  LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

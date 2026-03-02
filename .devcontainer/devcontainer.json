@@ -8,12 +8,11 @@
     "vscode": {
       "extensions": [
         "ms-python.python",
-        "alexcvzz.vscode-sqlite",
         "charliermarsh.ruff",
         "mtxr.sqltools",
         "mtxr.sqltools-driver-pg",
         "astro-build.astro-vscode",
-        "prisma.prisma"
+        "ckolkman.vscode-postgres"
       ]
     }
   }
