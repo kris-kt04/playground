@@ -76,13 +76,7 @@ export function LoginPage () {
           }
         </CardDescription>
         <CardAction>
-          <Button 
-            variant="link" 
-            onClick={() => setIsSignUp(!isSignUp)}
-            type="button"
-          >
-            {isSignUp ? 'Already have an account?' : 'Create account'}
-          </Button>
+
         </CardAction>
       </CardHeader>
       <CardContent>
@@ -122,14 +116,19 @@ export function LoginPage () {
         <Button 
           form="auth-form"
           type="submit" 
-          className="w-full"
+          className="w-full bg-white text-black hover:bg-gray-200"
           disabled={isLoading}
         >
           {isLoading ? 'Loading...' : (isSignUp ? 'Sign up' : 'Login')}
         </Button>
-        <Button variant="outline" className="w-full cursor-pointer">
-          {isSignUp ? 'Sign up' : 'Login'} with Google
-        </Button>
+          <Button 
+            variant="link" 
+            onClick={() => setIsSignUp(!isSignUp)}
+            type="button"
+            className="w-full bg-white text-black hover:bg-gray-200"
+          >
+            {isSignUp ? 'Already have an account?' : 'Create account'}
+          </Button>
       </CardFooter>
     </Card>
   )

@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { betterAuth } from "better-auth";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { prismaAdapter } from "better-auth/adapters/prisma";

@@ -1,0 +1,21 @@
+{
+  "name": "saas-monorepo",
+  "version": "1.0.0",
+  "description": "SaaS monorepo with API and Web",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace=packages/api\" \"npm run dev --workspace=packages/web\"",
+    "install": "npm install && npm install --workspace=packages/api && npm install --workspace=packages/web",
+    "build": "npm run build --workspace=packages/web",
+    "db:dev": "npm run db:dev --workspace=packages/api",
+    "db:sync": "npm run db:sync --workspace=packages/api",
+    "migrate:deploy": "npm run migrate:deploy --workspace=packages/api",
+    "generate": "npm run generate --workspace=packages/api"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
