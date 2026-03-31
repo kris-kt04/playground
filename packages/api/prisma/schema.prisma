@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,60 +7,58 @@ datasource db {
 }
 
 model Organization {
-  id          String        @id @default(cuid())
+  id          String       @id @default(cuid())
   name        String
-  createdAt   DateTime      @default(now())
+  createdAt   DateTime     @default(now())
   memberships Membership[]
+  userId    String
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  emailVerified Boolean   @default(false)
+  id            String       @id @default(cuid())
+  email         String       @unique
+  createdAt     DateTime     @default(now())
   name          String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  memberships Membership[]  // 👈 required
-  sessions  Session[]
-  accounts  Account[]
+  updatedAt     DateTime     @updatedAt
+  emailVerified Boolean      @default(false)
+  accounts      Account[]
+  memberships   Membership[]
+  sessions      Session[]
 }
 
 model Session {
   id        String   @id @default(cuid())
   userId    String
-  token     String?  @unique
   expiresAt DateTime
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   ipAddress String?
+  token     String?  @unique
+  updatedAt DateTime @updatedAt
   userAgent String?
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {
-  id                String  @id @default(cuid())
-  accountId         String?
+  id                String   @id @default(cuid())
   userId            String
   providerId        String
   providerAccountId String?
   password          String?
+  accountId         String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([providerId, providerAccountId])
 }
 
 model Membership {
-  id             String        @id @default(cuid())
-  role           String        @default("MEMBER")
-
+  id             String       @id @default(cuid())
+  role           String       @default("MEMBER")
   userId         String
   organizationId String
-
-  user           User          @relation(fields: [userId], references: [id])
-  organization   Organization  @relation(fields: [organizationId], references: [id])
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  user           User         @relation(fields: [userId], references: [id])
 
   @@unique([userId, organizationId])
 }
