@@ -14,6 +14,8 @@ import { Label } from "@/components/ui/label"
 import { authClient } from "@/lib/auth-client";
 import { useNavigate } from "@tanstack/react-router";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
 
 export function LoginPage () {
     const [isLoading, setIsLoading] = useState(false);
@@ -49,6 +51,20 @@ export function LoginPage () {
 
                 if (response.data?.user?.createdAt) {
                     console.log('Auth successful:', response.data);
+
+                    // Create organization for new user on sign up
+                    if (isSignUp) {
+                        await fetch(`${API_BASE_URL}/api/organization`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            credentials: 'include',
+                            body: JSON.stringify({
+                                userId: response.data.user.id,
+                                userName: response.data.user.name,
+                                userEmail: response.data.user.email,
+                            }),
+                        });
+                    }
                     // Handle successful login/signup
                     navigate({ to: '/hello' });
                 } else {
