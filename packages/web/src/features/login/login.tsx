@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { authClient } from "@/lib/auth-client";
 import { useNavigate } from "@tanstack/react-router";
+import { useSession } from "@/lib/useSession";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
@@ -22,6 +23,14 @@ export function LoginPage () {
     const [error, setError] = useState<string | null>(null);
     const [isSignUp, setIsSignUp] = useState(false);
     const navigate = useNavigate();
+    const { session, loading } = useSession();
+
+    // Redirect to hello if already logged in
+    useEffect(() => {
+      if (session && !loading) {
+        navigate({ to: '/hello' });
+      }
+    }, [session, loading, navigate]);
 
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -79,6 +88,16 @@ export function LoginPage () {
         };
 
         request();
+    }
+
+    if (loading) {
+      return (
+        <Card className="w-full max-w-sm">
+          <CardContent className="pt-6">
+            <div>Loading...</div>
+          </CardContent>
+        </Card>
+      );
     }
 
   return (
