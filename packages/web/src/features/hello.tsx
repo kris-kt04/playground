@@ -2,9 +2,11 @@ import { authClient } from "@/lib/auth-client";
 import { useNavigate } from "@tanstack/react-router";
 import { Card } from "@/components/ui/card";
 import { CardHeader } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 import { CardTitle } from "@/components/ui/card";
 import { CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Carousel, CarouselNext, CarouselPrevious, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 
 export function HomePage() {
 
@@ -35,6 +37,23 @@ export function HomePage() {
           </Button>
       </Card>
 
+ <Carousel className="w-full max-w-[12rem] sm:max-w-xs">
+      <CarouselContent>
+        {Array.from({ length: 5 }).map((_, index) => (
+          <CarouselItem key={index}>
+            <div className="p-1">
+              <Card>
+                <CardContent className="flex aspect-square items-center justify-center p-6">
+                  <span className="text-4xl font-semibold">{index + 1}</span>
+                </CardContent>
+              </Card>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
     </div>
   )
 }
