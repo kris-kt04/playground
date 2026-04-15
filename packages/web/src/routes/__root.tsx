@@ -5,12 +5,14 @@ import {
   HeadContent,
   Scripts,
   redirect,
+  useLocation,
 } from '@tanstack/react-router'
 
 import '@/styles/global.css';
 import { ThemeProvider } from '@/components/theme-provider'
 import { getThemeServerFn } from '@/lib/theme'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Navbar } from '@/components/navbar'
 
 
 const queryClient = new QueryClient();
@@ -52,6 +54,8 @@ const Providers = ({ children }: Readonly<{ children: ReactNode }>) => {
 
 function RootComponent() {
   const theme = Route.useLoaderData();
+  const location = useLocation();
+  const hideNavbar = location.pathname === '/login';
 
   return (
     <html className={theme} suppressHydrationWarning>
@@ -59,6 +63,7 @@ function RootComponent() {
         <HeadContent />
       </head>
       <body>
+        {!hideNavbar && <Navbar />}
         <Providers>
           <Outlet />
         </Providers>

@@ -1,50 +1,40 @@
-import { authClient } from "@/lib/auth-client";
-import { useNavigate } from "@tanstack/react-router";
 import { Card } from "@/components/ui/card";
-import { CardHeader } from "@/components/ui/card";
 import { CardContent } from "@/components/ui/card";
-import { CardTitle } from "@/components/ui/card";
-import { CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Carousel, CarouselNext, CarouselPrevious, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 
 export function HomePage() {
 
-    const navigate = useNavigate();
     
-    const handleLogout = async () => {
-        try {
-            await authClient.signOut();
-            navigate({ to: '/login' });
-        } catch (err) {
-            console.error('Logout error:', err);
-        }
-    }
+
+
+    const items =[
+        { id: 1, content: 'Welcome' },
+        { id: 2, content: 'to' },
+        { id: 3, content: 'the exciting ' },
+        { id: 4, content: 'world' },
+        { id: 5, content: 'of React!' },
+    ]
 
   return (
-    <div className="bg-black flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
-      <h1 className="text-4xl font-bold text-white">Hello Page 🚀</h1>
+    <div className="bg-black flex min-h-svh w-full flex-col items-center justify-center gap-6 p-6 md:p-10">
 
-      <Card className="w-full max-w-xl">
-        <CardHeader>
-          <CardTitle>Protected Content</CardTitle>
-          <CardDescription>
-            This page is protected and requires authentication to access.
-          </CardDescription>
-        </CardHeader>
-          <Button onClick={() => handleLogout()}>
-            Logout
-          </Button>
-      </Card>
+      <div className="flex flex-row items-center w-full gap-6">
+        <div className="flex-1"></div>
+        <h1 className="text-4xl font-bold text-white">Hello Page 🚀</h1>
+        <div className="flex-1 flex justify-end">
 
- <Carousel className="w-full max-w-[12rem] sm:max-w-xs">
+        </div>
+      </div>
+
+
+<Carousel className="w-full max-w-2xl items-center justify-center gap-6 p-6">
       <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem key={index}>
+        {items.map((item) => (
+          <CarouselItem key={item.id}>
             <div className="p-1">
               <Card>
                 <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <span className="text-4xl font-semibold">{index + 1}</span>
+                  <span className="text-4xl font-semibold">{item.content}</span>
                 </CardContent>
               </Card>
             </div>
