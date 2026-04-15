@@ -6,7 +6,7 @@ export function HomePage() {
 
     
 
-
+ // TODO: replace with real data
     const items =[
         { id: 1, content: 'Welcome' },
         { id: 2, content: 'to' },
