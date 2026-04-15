@@ -55,7 +55,7 @@ const Providers = ({ children }: Readonly<{ children: ReactNode }>) => {
 function RootComponent() {
   const theme = Route.useLoaderData();
   const location = useLocation();
-  const hideNavbar = location.pathname === '/login';
+  const hideNavbar = ['/login', '/forgot-password', '/reset-password'].includes(location.pathname);
 
   return (
     <html className={theme} suppressHydrationWarning>
