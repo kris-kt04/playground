@@ -14,6 +14,10 @@ import { Label } from "@/components/ui/label"
 import { authClient } from "@/lib/auth-client";
 import { useNavigate } from "@tanstack/react-router";
 import { useSession } from "@/lib/useSession";
+import { Eye } from 'lucide-react';
+import { EyeOff } from 'lucide-react';
+
+
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
@@ -24,6 +28,7 @@ export function LoginPage () {
     const [isSignUp, setIsSignUp] = useState(false);
     const navigate = useNavigate();
     const { session, loading } = useSession();
+    const [showPassword, setShowPassword] = useState(false);
 
     // Redirect to hello if already logged in
     useEffect(() => {
@@ -139,7 +144,25 @@ export function LoginPage () {
                   </a>
                 )}
               </div>
-              <Input id="password" type="password" name="password" required />
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  required
+                />
+                {showPassword ? (
+                  <EyeOff
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
+                ) : (
+                  <Eye
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                    onClick={() => setShowPassword(!showPassword)}
+                  />
+                )}
+              </div>
             </div>
             {error && (
               <div className="text-red-600 text-sm">{error}</div>
