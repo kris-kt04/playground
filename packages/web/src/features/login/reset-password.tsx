@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -61,7 +61,10 @@ export function ResetPasswordPage() {
       }
       
       setSuccess(true);
-      setTimeout(() => navigate({ to: '/login' }), 2000);
+      useEffect(() => {
+        const timer = setTimeout(() => navigate({ to: '/login' }), 2000);
+        return () => clearTimeout(timer);
+      }, [navigate]);
     } catch (err) {
       console.error('Reset password error:', err);
       setError('Failed to reset password. The link may have expired.');
