@@ -102,21 +102,15 @@ export function ResetPasswordPage() {
                 type={showPassword ? "text" : "password"}
                 required
               />
-              {showPassword ? (
-                <EyeOff
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                  type="button"
-                  aria-label="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              ) : (
-              <Eye
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+              <button
                 type="button"
-                aria-label="button"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
                 onClick={() => setShowPassword(!showPassword)}
-              />
-              )}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
+              >
+                {showPassword ? <EyeOff /> : <Eye />}
+              </button>
             </div>
           </div>
           <div className="grid w-full items-center gap-2">
@@ -128,21 +122,15 @@ export function ResetPasswordPage() {
                 type={showPassword ? "text" : "password"}
                 required
               />
-              {showPassword ? (
-                <EyeOff
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                  type="button"
-                  aria-label="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
-              ) : ( 
-              <Eye
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+              <button
                 type="button"
-                aria-label="button"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
                 onClick={() => setShowPassword(!showPassword)}
-              />
-              )}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
+              >
+                {showPassword ? <EyeOff /> : <Eye />}
+              </button>
             </div>
           </div>
           {error && <p className="text-sm text-red-500">{error}</p>}

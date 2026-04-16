@@ -151,17 +151,15 @@ export function LoginPage () {
                   name="password"
                   required
                 />
-                {showPassword ? (
-                  <EyeOff
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                    onClick={() => setShowPassword(!showPassword)}
-                  />
-                ) : (
-                  <Eye
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
-                    onClick={() => setShowPassword(!showPassword)}
-                  />
-                )}
+              <button
+                type="button"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
+              >
+                {showPassword ? <EyeOff /> : <Eye />}
+              </button>
               </div>
             </div>
             {error && (
