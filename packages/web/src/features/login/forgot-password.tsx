@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button"
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -77,7 +75,7 @@ export function ForgotPasswordPage () {
                         <Input id="email" name="email" type="email" required />
                     </div>
                     {error && <p className="text-sm text-red-500">{error}</p>}
-                    <Button type="submit" disabled={isLoading} className="w-full bg-white text-black onhover:bg-gray-300 cursor-pointer">
+                    <Button type="submit" disabled={isLoading} className="w-full bg-white text-black hover:bg-gray-300 cursor-pointer">
                         {isLoading ? 'Sending...' : 'Send Reset Link'}
                     </Button>
                 </form>
