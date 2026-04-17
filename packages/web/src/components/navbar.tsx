@@ -31,16 +31,13 @@ export function Navbar() {
     <header className="relative z-50 flex items-center justify-between p-4 text-white bg-black">
 
       <a href="/" className="flex-shrink-0 px-2 md:px-16"> 
-        <img src="/images/H010.png" alt="MySite Logo" className=" md:h-10 h-10 w-auto md:w-auto" />
+        <img src="/images/logo.png" alt="MySite Logo" className=" md:h-10 h-10 w-auto md:w-auto" />
       </a>
 
       <div className="flex items-center ml-auto px-2 md:px-16 ">
         <nav className="hidden md:flex items-center space-x-6 ">
             <NavigationMenu className="text-base">
             <NavigationMenuList>
-              <NavigationMenuItem>
-              <NavigationMenuLink href="https://features.h010.com" className="text-base">Features</NavigationMenuLink>
-              </NavigationMenuItem>
               <NavigationMenuItem>
               <NavigationMenuLink href="/pricing" className="text-base">Pricing</NavigationMenuLink>
               </NavigationMenuItem>
