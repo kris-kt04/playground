@@ -10,16 +10,28 @@ import { Menu } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
 import { authClient } from "@/lib/auth-client";
 import { useNavigate } from "@tanstack/react-router";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+} from '@/components/ui/alert-dialog';
 
 
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false);
+  const [alertbox, setalertbox] = useState (false);
   const navigate = useNavigate();
 
       const handleLogout = async () => {
+
           try {
+              setalertbox(false);
               await authClient.signOut();
               navigate({ to: '/login' });
           } catch (err) {
@@ -65,7 +77,21 @@ export function Navbar() {
             </NavigationMenuList>
             </NavigationMenu>
         
-            <Button onClick={() => handleLogout()} className="text-black cursor-pointer hover:bg-gray-200 bg-white text-base">Logout</Button>
+            <AlertDialog open={alertbox} onOpenChange={setalertbox}>
+              <Button onClick={() => setalertbox(true)} className="text-black bg-white cursor-pointer hover:bg-gray-200 z-30">Logout</Button>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Confirm Logout</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Are you sure you want to logout?
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <Button variant="outline" onClick={() => setalertbox(false)}>Cancel</Button>
+                  <Button onClick={() => handleLogout()} className="text-black bg-white z-30">Logout</Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
         </nav>
 
         {/* Mobile hamburger */}
@@ -85,7 +111,7 @@ export function Navbar() {
           <a href="https://news.h010.com/">News</a>
           <a href="https://help.h010.com/support/home">FAQs</a>
           <a href="/contact">Contact Us</a>
-          <Button onClick={() => handleLogout()} className="text-black z-30">Logout</Button>
+          <Button onClick={() => handleLogout()} className="text-white z-30">Logout</Button>
         </div>
       )}
     </header>
