@@ -68,9 +68,9 @@ export function Navbar() {
               </NavigationMenuLink>
               {open && (
                 <div className="absolute mt-2 bg-black text-white rounded shadow-lg border-l border-r border-b border-gray-700">
-                  <a href="https://news.h010.com/" className="block px-4 py-2 hover:bg-white hover:text-black">News</a>
-                  <a href="https://help.h010.com/support/home" className="block px-4 py-2 hover:bg-white hover:text-black">FAQs</a>
-                  <a href="/contact" className="block px-3 py-2 hover:bg-white hover:text-black">Contact Us</a>
+                  <a href="/dashboard" className="block px-4 py-2 hover:bg-white hover:text-black">News</a>
+                  <a href="/dashboard" className="block px-4 py-2 hover:bg-white hover:text-black">FAQs</a>
+                  <a href="/dashboard" className="block px-3 py-2 hover:bg-white hover:text-black">Contact Us</a>
                 </div>
               )}
               </NavigationMenuItem>
@@ -108,9 +108,9 @@ export function Navbar() {
         <div className="absolute top-full left-0 w-full  p-3  md:hidden flex flex-col space-y-4 text-white bg-black">
           <a href="https://features.h010.com">Features</a>
           <a href="/pricing">Pricing</a>
-          <a href="https://news.h010.com/">News</a>
-          <a href="https://help.h010.com/support/home">FAQs</a>
-          <a href="/contact">Contact Us</a>
+          <a href="/dashboard">News</a>
+          <a href="/dashboard">FAQs</a>
+          <a href="/dashboard">Contact Us</a>
           <Button onClick={() => handleLogout()} className="text-white z-30">Logout</Button>
         </div>
       )}
