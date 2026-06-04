@@ -14,6 +14,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as HiRouteImport } from './routes/hi'
 import { Route as HelloRouteImport } from './routes/hello'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as FeaturesRouteImport } from './routes/features'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -40,8 +41,14 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FeaturesRoute = FeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/features': typeof FeaturesRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/hello': typeof HelloRoute
   '/hi': typeof HiRoute
@@ -49,6 +56,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
 }
 export interface FileRoutesByTo {
+  '/features': typeof FeaturesRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/hello': typeof HelloRoute
   '/hi': typeof HiRoute
@@ -57,6 +65,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/features': typeof FeaturesRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/hello': typeof HelloRoute
   '/hi': typeof HiRoute
@@ -66,15 +75,23 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/features'
     | '/forgot-password'
     | '/hello'
     | '/hi'
     | '/login'
     | '/reset-password'
   fileRoutesByTo: FileRoutesByTo
-  to: '/forgot-password' | '/hello' | '/hi' | '/login' | '/reset-password'
+  to:
+    | '/features'
+    | '/forgot-password'
+    | '/hello'
+    | '/hi'
+    | '/login'
+    | '/reset-password'
   id:
     | '__root__'
+    | '/features'
     | '/forgot-password'
     | '/hello'
     | '/hi'
@@ -83,6 +100,7 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  FeaturesRoute: typeof FeaturesRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   HelloRoute: typeof HelloRoute
   HiRoute: typeof HiRoute
@@ -127,10 +145,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/features': {
+      id: '/features'
+      path: '/features'
+      fullPath: '/features'
+      preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  FeaturesRoute: FeaturesRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   HelloRoute: HelloRoute,
   HiRoute: HiRoute,
