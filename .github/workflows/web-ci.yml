@@ -28,5 +28,8 @@ jobs:
       - name: Lint
         run: npm run lint --workspace=packages/web
 
+      - name: Test
+        run: npm test --workspace=packages/web
+
       - name: Build
         run: npm run build --workspace=packages/web

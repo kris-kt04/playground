@@ -10,16 +10,28 @@ import { Menu } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
 import { authClient } from "@/lib/auth-client";
 import { useNavigate } from "@tanstack/react-router";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogDescription,
+} from '@/components/ui/alert-dialog';
 
 
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false);
+  const [alertbox, setalertbox] = useState (false);
   const navigate = useNavigate();
 
       const handleLogout = async () => {
+
           try {
+              setalertbox(false);
               await authClient.signOut();
               navigate({ to: '/login' });
           } catch (err) {
@@ -31,7 +43,7 @@ export function Navbar() {
     <header className="relative z-50 flex items-center justify-between p-4 text-white bg-black">
 
       <a href="/" className="flex-shrink-0 px-2 md:px-16"> 
-        <img src="/images/H010.png" alt="MySite Logo" className=" md:h-10 h-10 w-auto md:w-auto" />
+        <img src="/images/logo.png" alt="MySite Logo" className=" md:h-10 h-10 w-auto md:w-auto" />
       </a>
 
       <div className="flex items-center ml-auto px-2 md:px-16 ">
@@ -68,7 +80,21 @@ export function Navbar() {
             </NavigationMenuList>
             </NavigationMenu>
         
-            <Button onClick={() => handleLogout()} className="text-black cursor-pointer hover:bg-gray-200 bg-white text-base">Logout</Button>
+            <AlertDialog open={alertbox} onOpenChange={setalertbox}>
+              <Button onClick={() => setalertbox(true)} className="text-black bg-white cursor-pointer hover:bg-gray-200 z-30">Logout</Button>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Confirm Logout</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Are you sure you want to logout?
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <Button variant="outline" onClick={() => setalertbox(false)}>Cancel</Button>
+                  <Button onClick={() => handleLogout()} className="text-black bg-white z-30">Logout</Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
         </nav>
 
         {/* Mobile hamburger */}

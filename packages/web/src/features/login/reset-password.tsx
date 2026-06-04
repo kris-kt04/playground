@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -11,11 +11,16 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { API_BASE_URL } from "@/lib/services";
+import { Eye } from 'lucide-react';
+import { EyeOff } from 'lucide-react';
+
+
 
 export function ResetPasswordPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const search = useSearch({ from: "/reset-password" });
   const token = (search as { token?: string }).token;
@@ -56,7 +61,10 @@ export function ResetPasswordPage() {
       }
       
       setSuccess(true);
-      setTimeout(() => navigate({ to: '/login' }), 2000);
+      useEffect(() => {
+        const timer = setTimeout(() => navigate({ to: '/login' }), 2000);
+        return () => clearTimeout(timer);
+      }, [navigate]);
     } catch (err) {
       console.error('Reset password error:', err);
       setError('Failed to reset password. The link may have expired.');
@@ -85,12 +93,45 @@ export function ResetPasswordPage() {
       <CardContent>
         <form onSubmit={handleSubmit} className="grid w-full items-center gap-4">
           <div className="grid w-full items-center gap-2">
+            
             <Label htmlFor="password">New Password</Label>
-            <Input id="password" name="password" type="password" required />
+            <div className="relative">
+              <Input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                required
+              />
+              <button
+                type="button"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
+              >
+                {showPassword ? <EyeOff /> : <Eye />}
+              </button>
+            </div>
           </div>
           <div className="grid w-full items-center gap-2">
             <Label htmlFor="confirmPassword">Confirm Password</Label>
-            <Input id="confirmPassword" name="confirmPassword" type="password" required />
+            <div className="relative">
+              <Input
+                id="confirmPassword"
+                name="confirmPassword"
+                type={showPassword ? "text" : "password"}
+                required
+              />
+              <button
+                type="button"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
+              >
+                {showPassword ? <EyeOff /> : <Eye />}
+              </button>
+            </div>
           </div>
           {error && <p className="text-sm text-red-500">{error}</p>}
           <Button type="submit" disabled={isLoading} className="w-full bg-white text-black hover:bg-gray-300 cursor-pointer">
