@@ -39,7 +39,7 @@ export function Navbar() {
             <NavigationMenu className="text-base">
             <NavigationMenuList>
               <NavigationMenuItem>
-              <NavigationMenuLink href="https://features.h010.com" className="text-base">Features</NavigationMenuLink>
+              <NavigationMenuLink href="/features" className="text-base">Features</NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
               <NavigationMenuLink href="/pricing" className="text-base">Pricing</NavigationMenuLink>
@@ -59,8 +59,8 @@ export function Navbar() {
               </NavigationMenuLink>
               {open && (
                 <div className="absolute mt-2 bg-black text-white rounded shadow-lg border-l border-r border-b border-gray-700">
-                  <a href="https://news.h010.com/" className="block px-4 py-2 hover:bg-white hover:text-black">News</a>
-                  <a href="https://help.h010.com/support/home" className="block px-4 py-2 hover:bg-white hover:text-black">FAQs</a>
+                  <a href="/news" className="block px-4 py-2 hover:bg-white hover:text-black">News</a>
+                  <a href="/faqs" className="block px-4 py-2 hover:bg-white hover:text-black">FAQs</a>
                   <a href="/contact" className="block px-3 py-2 hover:bg-white hover:text-black">Contact Us</a>
                 </div>
               )}
@@ -83,10 +83,10 @@ export function Navbar() {
       {/* Mobile menu */}
       {isMobile && (
         <div className="absolute top-full left-0 w-full  p-3  md:hidden flex flex-col space-y-4 text-white bg-black">
-          <a href="https://features.h010.com">Features</a>
+          <a href="/features">Features</a>
           <a href="/pricing">Pricing</a>
-          <a href="https://news.h010.com/">News</a>
-          <a href="https://help.h010.com/support/home">FAQs</a>
+          <a href="/news">News</a>
+          <a href="/faqs">FAQs</a>
           <a href="/contact">Contact Us</a>
           <Button onClick={() => handleLogout()} className="text-black z-30">Logout</Button>
         </div>
