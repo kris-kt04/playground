@@ -9,10 +9,12 @@ import {
 } from '@tanstack/react-router'
 
 import '@/styles/global.css';
-import { ThemeProvider } from '@/components/theme-provider'
+// import { ThemeProvider } from '@/components/theme-provider'
 import { getThemeServerFn } from '@/lib/theme'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Navbar } from '@/components/navbar'
+import { Theme } from "@radix-ui/themes";
+
 
 
 const queryClient = new QueryClient();
@@ -45,9 +47,9 @@ const Providers = ({ children }: Readonly<{ children: ReactNode }>) => {
   const data = Route.useLoaderData();
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme={data}>
+      <Theme accentColor="crimson" grayColor="sand" radius="large" scaling="95%">
         {children}
-      </ThemeProvider>
+      </Theme>
     </QueryClientProvider>
   )
 }

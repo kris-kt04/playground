@@ -20,7 +20,7 @@ export function HomePage() {
 
       <div className="flex flex-row items-center w-full gap-6">
         <div className="flex-1"></div>
-        <h1 className="text-4xl font-bold text-white">Hello Page 🚀</h1>
+        <h1 className="text-4xl font-bold text-white">Welcome to PlayGround</h1>
         <div className="flex-1 flex justify-end">
 
         </div>
