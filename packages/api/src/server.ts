@@ -1,7 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import { auth } from "./auth";
-import { createOrganizationForUser } from "./db/organization";
+import { organizationRoutes } from "./routes/organization";
 
 const app = Fastify();
 
@@ -10,31 +10,7 @@ app.register(cors, {
   credentials: true,
 });
 
-// Create organization for user
-app.post("/api/organization", async (request, reply) => {
-  try {
-    const { userId, userName, userEmail } = request.body as {
-      userId: string;
-      userName?: string;
-      userEmail: string;
-    };
-
-    if (!userId || !userEmail) {
-      return reply.status(400).send({ error: "userId and userEmail are required" });
-    }
-
-    const organization = await createOrganizationForUser({
-      userId,
-      userName,
-      userEmail,
-    });
-
-    return reply.send({ organization });
-  } catch (error) {
-    console.error("Create organization error:", error);
-    return reply.status(500).send({ error: "Failed to create organization" });
-  }
-});
+app.register(organizationRoutes);
 
 // Handle all auth routes
 app.all("/api/auth/*", async (request, reply) => {

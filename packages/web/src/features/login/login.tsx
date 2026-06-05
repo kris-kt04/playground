@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button"
+// import { Button } from "@/components/ui/button"
+import { Button } from "@radix-ui/themes";
+
 import {
   Card,
   CardAction,
@@ -178,7 +180,7 @@ export function LoginPage () {
           {isLoading ? 'Loading...' : (isSignUp ? 'Sign up' : 'Login')}
         </Button>
           <Button 
-            variant="link" 
+            variant="outline" 
             onClick={() => setIsSignUp(!isSignUp)}
             type="button"
             className="w-full bg-white text-black hover:bg-gray-200"
