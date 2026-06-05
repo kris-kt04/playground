@@ -18,19 +18,15 @@ function AdminUsersPage() {
       try {
         // Wait for session to load
         if (sessionLoading) {
-          console.log("Session still loading...");
           return;
         }
 
-        console.log("Admin page - Session object:", session);
 
         if (!session?.userId) {
-          console.log("Session structure:", JSON.stringify(session, null, 2));
           throw new Error('Not authenticated - please login');
         }
 
         const userId = session.userId;
-        console.log("Using user ID:", userId);
         
         const res = await fetch(`${API_BASE_URL}/api/admin`, {
           headers: {
