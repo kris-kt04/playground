@@ -5,7 +5,10 @@ export interface CreateOrganizationForUserParams {
   userName?: string | null;
   userEmail: string;
 }
-
+export interface GetAdminUserParams {
+  userId: string;
+  role: string;
+}
 /**
  * Creates a personal organization for a new user and assigns them as owner
  */
@@ -63,6 +66,34 @@ export async function getOrganizationsForUser(userId: string) {
       memberships: {
         some: { userId },
       },
+    },
+  });
+}
+
+/**
+ * Get all users with their roles
+ */
+export async function getAllUsers() {
+  return prisma.user.findMany({
+    include: {
+      memberships: {
+        include: {
+          organization: true,
+        },
+      },
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+}
+
+/**
+ * Check if user is admin
+ */
+export async function getUserWithRole(userId: string) {
+  return prisma.user.findUnique({
+    where: { id: userId },
+    include: {
+      memberships: true,
     },
   });
 }

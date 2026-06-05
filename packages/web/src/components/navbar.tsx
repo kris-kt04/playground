@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -6,10 +6,12 @@ import {
   NavigationMenuLink,
 } from "@/components/ui/navigation-menu"
 import { Button } from "@/components/ui/button"
-import { Menu } from 'lucide-react';
+import { Link, Menu } from 'lucide-react';
 import { ChevronDown } from 'lucide-react';
 import { authClient } from "@/lib/auth-client";
 import { useNavigate } from "@tanstack/react-router";
+import { useSession } from "@/lib/useSession";
+import { API_BASE_URL } from "@/lib/services";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -26,20 +28,67 @@ export function Navbar() {
   const [open, setOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false);
   const [alertbox, setalertbox] = useState (false);
+  const [userRole, setUserRole] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { session, loading: sessionLoading } = useSession();
+  
+  // Fetch user role from backend
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        // Wait for session to load
+        if (sessionLoading) {
+          return;
+        }
+        
+        if (!session?.userId) {
+          return;
+        }
 
-      const handleLogout = async () => {
+        const userId = session.userId;
 
-          try {
-              setalertbox(false);
-              await authClient.signOut();
-              navigate({ to: '/login' });
-          } catch (err) {
-              console.error('Logout error:', err);
-          }
+        const response = await fetch(`${API_BASE_URL}/api/admin`, {
+          headers: {
+            'x-user-id': userId,
+          },
+        });
+        
+        if (!response.ok) {
+          const error = await response.text();
+          console.error("Admin endpoint error:", response.status, error);
+          return;
+        }
+        
+        const data = await response.json();
+        
+        if (data.adminUser && Array.isArray(data.adminUser)) {
+          const role = data.adminUser[0]?.role || null;
+          setUserRole(role);
+        }
+      } catch (error) {
+        console.error('Error fetching user role:', error);
       }
+    };
+
+    fetchUserRole();
+  }, [session, sessionLoading]);
+  
+  const isAdmin = userRole === 'OWNER';
+
+  const handleLogout = async () => {
+    try {
+      setalertbox(false);
+      await authClient.signOut();
+      navigate({ to: '/login' });
+    } catch (err) {
+      console.error('Logout error:', err);
+    }
+  }
+
 
   return (
+    <>
+
     <header className="relative z-50 flex items-center justify-between p-4 text-white bg-black">
 
       <a href="/" className="flex-shrink-0 px-2 md:px-16"> 
@@ -77,6 +126,11 @@ export function Navbar() {
                 </div>
               )}
               </NavigationMenuItem>
+              {isAdmin && (
+                <NavigationMenuItem>
+                  <NavigationMenuLink href="/admin" className="text-base font-semibold text-purple-400 hover:text-purple-300">Admin</NavigationMenuLink>
+                </NavigationMenuItem>
+              )}
             </NavigationMenuList>
             </NavigationMenu>
         
@@ -114,9 +168,11 @@ export function Navbar() {
           <a href="/news">News</a>
           <a href="/faqs">FAQs</a>
           <a href="/contact">Contact Us</a>
+          {isAdmin && <a href="/admin" className="font-semibold text-purple-400">Admin</a>}
           <Button onClick={() => handleLogout()} className="text-black z-30">Logout</Button>
         </div>
       )}
     </header>
+    </>
   )
 }
