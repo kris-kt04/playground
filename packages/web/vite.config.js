@@ -11,7 +11,6 @@ export default defineConfig({
     TanStackRouterVite(),
     react(),
     tailwindcss(),
-    TanStackRouterVite(),
   ],
   resolve: {
     alias: {
