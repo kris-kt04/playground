@@ -49,10 +49,8 @@ app.get("/api/admin", async (request, reply) => {
 // Handle all auth routes - catch-all must be LAST
 app.all("/api/auth/*", async (request, reply) => {
   try {
-    const path = request.url.replace("/api/auth", "");
-    
     // Get request body
-    let body: any = null;
+    let body: unknown = null;
     if (request.method !== "GET") {
       body = request.body;
     }
@@ -60,7 +58,7 @@ app.all("/api/auth/*", async (request, reply) => {
     // Create a Request object compatible with better-auth
     const req = new Request(`http://localhost:3000${request.url}`, {
       method: request.method,
-      headers: request.headers as any,
+      headers: request.headers as Record<string, string>,
       body: body ? JSON.stringify(body) : undefined,
     });
 

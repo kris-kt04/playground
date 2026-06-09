@@ -3,8 +3,7 @@ import { betterAuth } from "better-auth";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { Resend } from 'resend';
-
-const { PrismaClient } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
 
 const DATABASE = process.env.DATABASE_URL;
 if (!DATABASE) {

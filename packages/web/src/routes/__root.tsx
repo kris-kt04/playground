@@ -4,7 +4,6 @@ import {
   createRootRoute,
   HeadContent,
   Scripts,
-  redirect,
   useLocation,
 } from '@tanstack/react-router'
 
@@ -44,7 +43,6 @@ export const Route = createRootRoute({
 })
 
 const Providers = ({ children }: Readonly<{ children: ReactNode }>) => {
-  const data = Route.useLoaderData();
   return (
     <QueryClientProvider client={queryClient}>
       <Theme accentColor="crimson" grayColor="sand" radius="large" scaling="95%">

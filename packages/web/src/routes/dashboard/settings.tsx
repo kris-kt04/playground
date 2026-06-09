@@ -10,7 +10,6 @@ export const Route = createFileRoute('/dashboard/settings')({
 function Settings() {
   const [email, setEmail] = useState('user@example.com')
   const [name, setName] = useState('John Doe')
-  const [notifications, setNotifications] = useState(true)
 
   return (
     <div className="p-6 md:p-10 text-white max-w-2xl">
