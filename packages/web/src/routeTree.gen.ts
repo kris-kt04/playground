@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HiRouteImport } from './routes/hi'
 import { Route as HelloRouteImport } from './routes/hello'
@@ -27,6 +28,11 @@ import { Route as DashboardAnalyticsRouteImport } from './routes/dashboard/analy
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/hello': typeof HelloRoute
   '/hi': typeof HiRoute
   '/login': typeof LoginRoute
+  '/pricing': typeof PricingRoute
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard/analytics': typeof DashboardAnalyticsRoute
   '/dashboard/billing': typeof DashboardBillingRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByTo {
   '/hello': typeof HelloRoute
   '/hi': typeof HiRoute
   '/login': typeof LoginRoute
+  '/pricing': typeof PricingRoute
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard/analytics': typeof DashboardAnalyticsRoute
   '/dashboard/billing': typeof DashboardBillingRoute
@@ -136,6 +144,7 @@ export interface FileRoutesById {
   '/hello': typeof HelloRoute
   '/hi': typeof HiRoute
   '/login': typeof LoginRoute
+  '/pricing': typeof PricingRoute
   '/reset-password': typeof ResetPasswordRoute
   '/dashboard/analytics': typeof DashboardAnalyticsRoute
   '/dashboard/billing': typeof DashboardBillingRoute
@@ -154,6 +163,7 @@ export interface FileRouteTypes {
     | '/hello'
     | '/hi'
     | '/login'
+    | '/pricing'
     | '/reset-password'
     | '/dashboard/analytics'
     | '/dashboard/billing'
@@ -169,6 +179,7 @@ export interface FileRouteTypes {
     | '/hello'
     | '/hi'
     | '/login'
+    | '/pricing'
     | '/reset-password'
     | '/dashboard/analytics'
     | '/dashboard/billing'
@@ -185,6 +196,7 @@ export interface FileRouteTypes {
     | '/hello'
     | '/hi'
     | '/login'
+    | '/pricing'
     | '/reset-password'
     | '/dashboard/analytics'
     | '/dashboard/billing'
@@ -202,6 +214,7 @@ export interface RootRouteChildren {
   HelloRoute: typeof HelloRoute
   HiRoute: typeof HiRoute
   LoginRoute: typeof LoginRoute
+  PricingRoute: typeof PricingRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
@@ -212,6 +225,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -337,6 +357,7 @@ const rootRouteChildren: RootRouteChildren = {
   HelloRoute: HelloRoute,
   HiRoute: HiRoute,
   LoginRoute: LoginRoute,
+  PricingRoute: PricingRoute,
   ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
