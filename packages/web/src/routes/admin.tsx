@@ -3,12 +3,17 @@ import { useEffect, useState } from 'react';
 import { useSession } from '@/lib/useSession';
 import { API_BASE_URL } from '@/lib/services';
 
+interface User {
+  id: string;
+  [key: string]: unknown;
+}
+
 export const Route = createFileRoute('/admin')({
   component: AdminUsersPage,
 });
 
 function AdminUsersPage() {
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const { session, loading: sessionLoading } = useSession();

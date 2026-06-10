@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { authClient } from "./auth-client";
 
+interface Session {
+  userId?: string;
+  [key: string]: unknown;
+}
+
 export function useSession() {
-  const [session, setSession] = useState<any>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

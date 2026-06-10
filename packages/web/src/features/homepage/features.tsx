@@ -13,7 +13,7 @@ const features = [
 ];
     return (
     <div className="bg-black flex min-h-svh w-full flex-col items-center justify-center gap-6 p-6 md:p-10">
-        <CardContent>
+        <CardContent className = "border-2 border-gray-700 rounded-lg flex flex-col items-center justify-center gap-4 p-6">
             <h1 className="text-4xl font-bold text-white">Features</h1>
             <p className="text-lg text-gray-300">Explore the amazing features of our application.</p>
         </CardContent>
