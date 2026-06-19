@@ -100,6 +100,9 @@ export function Navbar() {
             <NavigationMenu className="text-base">
             <NavigationMenuList>
               <NavigationMenuItem>
+              <NavigationMenuLink href="/dashboard" className="text-base">Dashboard</NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
               <NavigationMenuLink href="/features" className="text-base">Features</NavigationMenuLink>
               </NavigationMenuItem>
               <NavigationMenuItem>
@@ -163,6 +166,7 @@ export function Navbar() {
       {/* Mobile menu */}
       {isMobile && (
         <div className="absolute top-full left-0 w-full  p-3  md:hidden flex flex-col space-y-4 text-white bg-black">
+          <a href="/dashboard">Dashboard</a>
           <a href="/features">Features</a>
           <a href="/pricing">Pricing</a>
           <a href="/news">News</a>

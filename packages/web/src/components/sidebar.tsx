@@ -3,6 +3,7 @@ import { Link, useLocation } from '@tanstack/react-router';
 import {
   LayoutDashboard,
   BarChart3,
+  MessageCircle,
   Zap,
   CreditCard,
   Settings,
@@ -39,6 +40,11 @@ const navItems: NavItem[] = [
     name: 'Analytics',
     href: '/dashboard/analytics',
     icon: <BarChart3 size={20} />,
+  },
+  {
+    name: 'AI Assistant',
+    href: '/dashboard/chat',
+    icon: <MessageCircle size={20} />,
   },
   {
     name: 'Integrations',

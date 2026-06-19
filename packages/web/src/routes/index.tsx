@@ -50,21 +50,6 @@ function Landing() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Navigation */}
-      <nav className="flex items-center justify-between p-6 md:px-16">
-        <div className="flex items-center gap-2">
-          <img src="/images/logo.png" alt="Logo" className="h-8 w-auto" />
-          <span className="font-bold text-xl">PlayGround</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <Link to="/pricing" className="hover:text-gray-300 transition">
-            Pricing
-          </Link>
-          <Link to="/login">
-            <Button variant="outline">Login</Button>
-          </Link>
-        </div>
-      </nav>
 
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center px-6 py-20 md:py-32 text-center">
@@ -135,7 +120,7 @@ function Landing() {
         <h2 className="text-3xl font-bold mb-6">Ready to get started?</h2>
         <p className="text-xl text-gray-400 mb-8">Join thousands of teams already using PlayGround</p>
         <Link to="/login">
-          <Button size="lg" className="flex items-center gap-2">
+          <Button size="lg" className="flex items-center gap-2 mx-auto">
             Start Free Trial
             <ArrowRight size={20} />
           </Button>
