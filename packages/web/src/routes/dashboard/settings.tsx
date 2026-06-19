@@ -2,6 +2,11 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
+import { toast } from 'react-toast'
+import { authClient } from "@/lib/auth-client";
+import { useSession } from "@/lib/useSession";
+import { API_BASE_URL } from "@/lib/services";
+import { useNavigate } from "@tanstack/react-router";
 
 export const Route = createFileRoute('/dashboard/settings')({
   component: Settings,
@@ -10,6 +15,51 @@ export const Route = createFileRoute('/dashboard/settings')({
 function Settings() {
   const [email, setEmail] = useState('user@example.com')
   const [name, setName] = useState('John Doe')
+  const [isDeleting, setIsDeleting] = useState(false)
+  const { session, loading: sessionLoading } = useSession();
+  const navigate = useNavigate();
+
+  const handleDeleteAccount = async () => {
+     const confirmDelete = window.confirm('Are you sure you want to delete your account? This action cannot be undone.')
+    
+      if (!confirmDelete) return 
+
+      if (sessionLoading || !session?.userId) {
+        toast.error('Session is not ready. Please try again.')
+        return
+      }
+
+      setIsDeleting(true)
+
+      try {
+    const response = await fetch(`${API_BASE_URL}/api/account`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        'x-user-id': session?.userId || '',
+      },
+    })
+
+    if (!response.ok) {
+      const data = await response.json().catch((err) => {
+        console.error('Failed to parse error response:', err)
+        return { error: 'Unknown error' }
+      })
+      throw new Error(data.error || data.message || 'Failed to delete account')
+    }
+    
+    toast.success('Account deleted successfully. Redirecting...')
+    await authClient.signOut()
+    navigate({ to: '/login' })
+    } catch (error) {
+      console.error('Error deleting account:', error)
+      toast.error(`Failed to delete account: ${error instanceof Error ? error.message : 'Unknown error'}`)
+    } finally {
+      setIsDeleting(false)
+      }
+
+    }
+  
 
   return (
     <div className="p-6 md:p-10 text-white max-w-2xl">
@@ -80,7 +130,6 @@ function Settings() {
               </div>
               <input
                 type="checkbox"
-                defaultChecked={notifications}
                 className="w-5 h-5 rounded bg-gray-800 border-gray-700 cursor-pointer"
               />
             </div>
@@ -113,7 +162,9 @@ function Settings() {
         
         <div>
           <p className="text-sm text-gray-400 mb-4">Delete your account and all associated data</p>
-          <Button className="bg-red-600 hover:bg-red-700">Delete Account</Button>
+          <Button className="bg-red-600 hover:bg-red-700" onClick={handleDeleteAccount} disabled={isDeleting}>
+            {isDeleting ? 'Deleting...' : 'Delete Account'}
+          </Button>
         </div>
       </Card>
     </div>

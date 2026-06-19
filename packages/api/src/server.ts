@@ -1,17 +1,67 @@
+import path from "node:path";
+import { config as loadEnv } from "dotenv";
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import { auth } from "./auth";
 import { organizationRoutes } from "./routes/organization";
+import { chatRoutes } from "./routes/chat";
 import { getAllUsers, getUserWithRole } from "./db/organization";
+import { prisma } from "./db";
+
+loadEnv({ path: path.resolve(__dirname, "../.env"), override: true });
 
 const app = Fastify();
 
 app.register(cors, {
   origin: ["http://localhost:5173", "http://localhost:5174", "http://localhost:3000"],
   credentials: true,
+  methods: ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
 });
 
 app.register(organizationRoutes);
+app.register(chatRoutes);
+
+app.delete("/api/account", async (request, reply) => {
+  try {
+    const userId = request.headers["x-user-id"] as string;
+    if (!userId) {
+      return reply.status(401).send({ error: "Unauthorized" });
+    }
+
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      return reply.status(404).send({ error: "User not found" });
+    }
+
+    await prisma.$transaction(async (tx) => {
+      // Remove this user's org memberships first to satisfy FK constraints.
+      await tx.membership.deleteMany({ where: { userId } });
+
+      // Clean up organizations owned by this user.
+      const ownedOrganizations = await tx.organization.findMany({
+        where: { userId },
+        select: { id: true },
+      });
+
+      for (const organization of ownedOrganizations) {
+        await tx.user.updateMany({
+          where: { organizationId: organization.id },
+          data: { organizationId: null },
+        });
+
+        await tx.membership.deleteMany({ where: { organizationId: organization.id } });
+        await tx.organization.delete({ where: { id: organization.id } });
+      }
+
+      await tx.user.delete({ where: { id: userId } });
+    });
+
+    return reply.send({ success: true, message: "Account deleted successfully" });
+  } catch (error) {
+    console.error("Delete account error:", error);
+    return reply.status(500).send({ error: "Failed to delete account" });
+  }
+});
 
 // Admin endpoint - must be BEFORE catch-all routes
 app.get("/api/admin", async (request, reply) => {

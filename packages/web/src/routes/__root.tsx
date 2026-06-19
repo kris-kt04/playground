@@ -13,6 +13,7 @@ import { getThemeServerFn } from '@/lib/theme'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Navbar } from '@/components/navbar'
 import { Theme } from "@radix-ui/themes";
+import { ToastContainer } from 'react-toast'
 
 
 
@@ -66,6 +67,7 @@ function RootComponent() {
         {!hideNavbar && <Navbar />}
         <Providers>
           <Outlet />
+          <ToastContainer position="bottom-right" />
         </Providers>
         <Scripts />
       </body>
