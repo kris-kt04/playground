@@ -1,23 +1,34 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toast'
 import { authClient } from "@/lib/auth-client";
 import { useSession } from "@/lib/useSession";
 import { API_BASE_URL } from "@/lib/services";
 import { useNavigate } from "@tanstack/react-router";
+import { useForm } from 'react-hook-form'
 
 export const Route = createFileRoute('/dashboard/settings')({
   component: Settings,
 })
 
+interface updateProfileData {
+  name: string;
+  email: string;
+}
+
 function Settings() {
-  const [email, setEmail] = useState('user@example.com')
-  const [name, setName] = useState('John Doe')
   const [isDeleting, setIsDeleting] = useState(false)
   const { session, loading: sessionLoading } = useSession();
   const navigate = useNavigate();
+
+    const { register, handleSubmit, reset, formState: { isDirty, isSubmitting } } = useForm<updateProfileData>({
+    defaultValues: {
+      name: '',
+      email: '',
+    }
+  })
 
   const handleDeleteAccount = async () => {
      const confirmDelete = window.confirm('Are you sure you want to delete your account? This action cannot be undone.')
@@ -59,6 +70,65 @@ function Settings() {
       }
 
     }
+
+    const getProfile = async () => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/account/profile`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'x-user-id': session?.userId || '',
+          },
+        })
+        if (!response.ok) {
+          const data = await response.json().catch((err) => {
+            console.error('Failed to parse error response:', err)
+            return { error: 'Unknown error' }
+          })
+          throw new Error(data.error || data.message || 'Failed to fetch profile')
+        }
+        const profileData = await response.json()
+        reset(profileData)
+
+      } catch (error) {
+        console.error('Error fetching profile:', error)
+        toast.error(`Failed to fetch profile: ${error instanceof Error ? error.message : 'Unknown error'}`)
+      }
+    }
+    const onSubmit = async (data: updateProfileData) => {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/account/update`, {
+          method: 'PUT',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-user-id': session?.userId || '',
+          },
+          body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            const data = await response.json().catch((err) => {
+              console.error('Failed to parse error response:', err)
+              return { error: 'Unknown error' }
+            })
+            throw new Error(data.error || data.message || 'Failed to update profile')
+        }
+        else {
+          toast.success('Profile updated successfully')
+          reset(data)
+        }
+      } catch (error) {
+        console.error('Error updating profile:', error)
+        toast.error(`Failed to update profile: ${error instanceof Error ? error.message : 'Unknown error'}`)
+      }
+    }
+
+    useEffect(() => {
+      if (session?.userId) {
+        getProfile()
+      }
+    }, [session?.userId])
   
 
   return (
@@ -69,9 +139,10 @@ function Settings() {
       </div>
 
       {/* Profile Settings */}
-      <Card className="bg-gray-900 border-gray-800 p-6 mb-6">
+      <Card className="bg-gray-900 border-gray-800 p-6 mb-6 ">
         <h2 className="text-xl font-semibold mb-6">Profile Settings</h2>
-        
+      
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="space-y-6">
           {/* Profile Picture */}
           <div>
@@ -91,8 +162,7 @@ function Settings() {
             <label className="block text-sm font-medium mb-2">Full Name</label>
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              {...register('name')}
               className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
             />
           </div>
@@ -102,14 +172,20 @@ function Settings() {
             <label className="block text-sm font-medium mb-2">Email</label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              {...register('email')}
               className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 transition-colors"
             />
           </div>
 
-          <Button>Save Changes</Button>
+          <Button
+            type ="submit"
+            disabled={!isDirty || isSubmitting}
+           className="bg-blue-600 hover:bg-blue-700 cursor-pointer"
+          >
+            {isSubmitting ? 'Saving...' : 'Save Changes'}
+          </Button>
         </div>
+      </form>
       </Card>
 
       {/* Notification Preferences */}
@@ -170,3 +246,5 @@ function Settings() {
     </div>
   )
 }
+
+

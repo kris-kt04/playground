@@ -63,6 +63,60 @@ app.delete("/api/account", async (request, reply) => {
   }
 });
 
+// Get user profile
+
+app.get("/api/account/profile", async (request, reply) => {
+  try {
+    const userId = request.headers["x-user-id"] as string;
+    if (!userId) {
+      return reply.status(401).send({ error: "Unauthorized" });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { name: true, email: true },
+    });
+
+    if (!user) {
+      return reply.status(404).send({ error: "User not found" });
+    }
+
+    return reply.send(user);
+  } catch (error) {
+    console.error("Get profile error:", error);
+    return reply.status(500).send({ error: "Failed to fetch profile" });
+  }
+});
+
+
+// update user profile
+app.put("/api/account/update", async (request, reply) => {
+  try {
+    const userId = request.headers["x-user-id"] as string;
+    if (!userId) {
+      return reply.status(401).send({ error: "Unauthorized" });
+    }
+
+    const { name, email } = request.body as { name?: string; email?: string };
+
+    if (!name && !email) {
+      return reply.status(400).send({ error: "At least one of name or email must be provided" });
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: { name, email },
+      select: { name: true, email: true },
+    });
+
+    return reply.send(updatedUser); 
+  }
+  catch (error) {
+    console.error("Update profile error:", error);
+    return reply.status(500).send({ error: "Failed to update profile" });
+  }
+});
+
 // Admin endpoint - must be BEFORE catch-all routes
 app.get("/api/admin", async (request, reply) => {
   try {
