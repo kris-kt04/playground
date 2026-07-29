@@ -38,7 +38,7 @@ export const Route = createRootRoute({
   }),
   component: RootComponent,
   // beforeLoad: async () => {
-  //     throw redirect({to: '/dashboard'});
+  //     throw redirect({to: '/_protected/dashboard'});
   //   },
   loader: () => getThemeServerFn(),
 })

@@ -33,32 +33,32 @@ interface NavItem {
 const navItems: NavItem[] = [
   {
     name: 'Dashboard',
-    href: '/dashboard',
+    href: '/_protected/dashboard',
     icon: <LayoutDashboard size={20} />,
   },
   {
     name: 'Analytics',
-    href: '/dashboard/analytics',
+    href: '/_protected/dashboard/analytics',
     icon: <BarChart3 size={20} />,
   },
   {
     name: 'AI Assistant',
-    href: '/dashboard/chat',
+    href: '/_protected/dashboard/chat',
     icon: <MessageCircle size={20} />,
   },
   {
     name: 'Integrations',
-    href: '/dashboard/integrations',
+    href: '/_protected/dashboard/integrations',
     icon: <Zap size={20} />,
   },
   {
     name: 'Billing',
-    href: '/dashboard/billing',
+    href: '/_protected/dashboard/billing',
     icon: <CreditCard size={20} />,
   },
   {
     name: 'Settings',
-    href: '/dashboard/settings',
+    href: '/_protected/dashboard/settings',
     icon: <Settings size={20} />,
   },
 ];

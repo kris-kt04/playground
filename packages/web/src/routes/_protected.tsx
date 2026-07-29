@@ -11,7 +11,7 @@ export const Route = createFileRoute('/_protected')({
       }
       
       return { session: session.data.session }
-    } catch (error) {
+    } catch (_error) {
       throw redirect({ to: '/login' })
     }
   },
