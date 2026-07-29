@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Users, TrendingUp, Activity, ArrowUpRight } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 
-export const Route = createFileRoute('/dashboard/')({
+export const Route = createFileRoute('/_protected/dashboard/')({
   component: DashboardOverview,
 })
 

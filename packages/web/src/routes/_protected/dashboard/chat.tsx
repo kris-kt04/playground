@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useSession } from '@/lib/useSession'
 
-export const Route = createFileRoute('/dashboard/chat')({
+export const Route = createFileRoute('/_protected/dashboard/chat')({
   component: ChatPage,
 })
 

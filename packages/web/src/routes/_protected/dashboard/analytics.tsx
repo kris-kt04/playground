@@ -18,7 +18,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-export const Route = createFileRoute('/dashboard/analytics')({
+export const Route = createFileRoute('/_protected/dashboard/analytics')({
   component: Analytics,
 })
 

@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Zap, Check, X } from 'lucide-react'
 
-export const Route = createFileRoute('/dashboard/integrations')({
+export const Route = createFileRoute('/_protected/dashboard/integrations')({
   component: Integrations,
 })
 

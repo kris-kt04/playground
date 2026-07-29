@@ -9,7 +9,7 @@ import { API_BASE_URL } from "@/lib/services";
 import { useNavigate } from "@tanstack/react-router";
 import { useForm } from 'react-hook-form'
 
-export const Route = createFileRoute('/dashboard/settings')({
+export const Route = createFileRoute('/_protected/dashboard/settings')({
   component: Settings,
 })
 

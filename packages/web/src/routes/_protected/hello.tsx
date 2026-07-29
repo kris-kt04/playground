@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {HomePage} from "@/features/hello";
 
-export const Route = createFileRoute("/hello")({
+export const Route = createFileRoute("/_protected/hello")({
   component: RouteComponent,
 });
 function RouteComponent() {

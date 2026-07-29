@@ -10,30 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as HiRouteImport } from './routes/hi'
-import { Route as HelloRouteImport } from './routes/hello'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
-import { Route as FeaturesRouteImport } from './routes/features'
-import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as AdminRouteImport } from './routes/admin'
+import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
-import { Route as DashboardSettingsRouteImport } from './routes/dashboard/settings'
-import { Route as DashboardIntegrationsRouteImport } from './routes/dashboard/integrations'
-import { Route as DashboardChatRouteImport } from './routes/dashboard/chat'
-import { Route as DashboardBillingRouteImport } from './routes/dashboard/billing'
-import { Route as DashboardAnalyticsRouteImport } from './routes/dashboard/analytics'
+import { Route as ProtectedPricingRouteImport } from './routes/_protected/pricing'
+import { Route as ProtectedHelloRouteImport } from './routes/_protected/hello'
+import { Route as ProtectedFeaturesRouteImport } from './routes/_protected/features'
+import { Route as ProtectedDashboardRouteImport } from './routes/_protected/dashboard'
+import { Route as ProtectedAdminRouteImport } from './routes/_protected/admin'
+import { Route as ProtectedDashboardIndexRouteImport } from './routes/_protected/dashboard/index'
+import { Route as ProtectedDashboardSettingsRouteImport } from './routes/_protected/dashboard/settings'
+import { Route as ProtectedDashboardIntegrationsRouteImport } from './routes/_protected/dashboard/integrations'
+import { Route as ProtectedDashboardChatRouteImport } from './routes/_protected/dashboard/chat'
+import { Route as ProtectedDashboardBillingRouteImport } from './routes/_protected/dashboard/billing'
+import { Route as ProtectedDashboardAnalyticsRouteImport } from './routes/_protected/dashboard/analytics'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PricingRoute = PricingRouteImport.update({
-  id: '/pricing',
-  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -41,34 +36,13 @@ const LoginRoute = LoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const HiRoute = HiRouteImport.update({
-  id: '/hi',
-  path: '/hi',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HelloRoute = HelloRouteImport.update({
-  id: '/hello',
-  path: '/hello',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   id: '/forgot-password',
   path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const FeaturesRoute = FeaturesRouteImport.update({
-  id: '/features',
-  path: '/features',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
+const ProtectedRoute = ProtectedRouteImport.update({
+  id: '/_protected',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -76,104 +50,130 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardIndexRoute = DashboardIndexRouteImport.update({
+const ProtectedPricingRoute = ProtectedPricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const ProtectedHelloRoute = ProtectedHelloRouteImport.update({
+  id: '/hello',
+  path: '/hello',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const ProtectedFeaturesRoute = ProtectedFeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const ProtectedDashboardRoute = ProtectedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const ProtectedAdminRoute = ProtectedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => ProtectedRoute,
+} as any)
+const ProtectedDashboardIndexRoute = ProtectedDashboardIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => DashboardRoute,
+  getParentRoute: () => ProtectedDashboardRoute,
 } as any)
-const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardIntegrationsRoute = DashboardIntegrationsRouteImport.update({
-  id: '/integrations',
-  path: '/integrations',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardChatRoute = DashboardChatRouteImport.update({
+const ProtectedDashboardSettingsRoute =
+  ProtectedDashboardSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => ProtectedDashboardRoute,
+  } as any)
+const ProtectedDashboardIntegrationsRoute =
+  ProtectedDashboardIntegrationsRouteImport.update({
+    id: '/integrations',
+    path: '/integrations',
+    getParentRoute: () => ProtectedDashboardRoute,
+  } as any)
+const ProtectedDashboardChatRoute = ProtectedDashboardChatRouteImport.update({
   id: '/chat',
   path: '/chat',
-  getParentRoute: () => DashboardRoute,
+  getParentRoute: () => ProtectedDashboardRoute,
 } as any)
-const DashboardBillingRoute = DashboardBillingRouteImport.update({
-  id: '/billing',
-  path: '/billing',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardAnalyticsRoute = DashboardAnalyticsRouteImport.update({
-  id: '/analytics',
-  path: '/analytics',
-  getParentRoute: () => DashboardRoute,
-} as any)
+const ProtectedDashboardBillingRoute =
+  ProtectedDashboardBillingRouteImport.update({
+    id: '/billing',
+    path: '/billing',
+    getParentRoute: () => ProtectedDashboardRoute,
+  } as any)
+const ProtectedDashboardAnalyticsRoute =
+  ProtectedDashboardAnalyticsRouteImport.update({
+    id: '/analytics',
+    path: '/analytics',
+    getParentRoute: () => ProtectedDashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
-  '/dashboard': typeof DashboardRouteWithChildren
-  '/features': typeof FeaturesRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/hello': typeof HelloRoute
-  '/hi': typeof HiRoute
   '/login': typeof LoginRoute
-  '/pricing': typeof PricingRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/dashboard/analytics': typeof DashboardAnalyticsRoute
-  '/dashboard/billing': typeof DashboardBillingRoute
-  '/dashboard/chat': typeof DashboardChatRoute
-  '/dashboard/integrations': typeof DashboardIntegrationsRoute
-  '/dashboard/settings': typeof DashboardSettingsRoute
-  '/dashboard/': typeof DashboardIndexRoute
+  '/admin': typeof ProtectedAdminRoute
+  '/dashboard': typeof ProtectedDashboardRouteWithChildren
+  '/features': typeof ProtectedFeaturesRoute
+  '/hello': typeof ProtectedHelloRoute
+  '/pricing': typeof ProtectedPricingRoute
+  '/dashboard/analytics': typeof ProtectedDashboardAnalyticsRoute
+  '/dashboard/billing': typeof ProtectedDashboardBillingRoute
+  '/dashboard/chat': typeof ProtectedDashboardChatRoute
+  '/dashboard/integrations': typeof ProtectedDashboardIntegrationsRoute
+  '/dashboard/settings': typeof ProtectedDashboardSettingsRoute
+  '/dashboard/': typeof ProtectedDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
-  '/features': typeof FeaturesRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/hello': typeof HelloRoute
-  '/hi': typeof HiRoute
   '/login': typeof LoginRoute
-  '/pricing': typeof PricingRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/dashboard/analytics': typeof DashboardAnalyticsRoute
-  '/dashboard/billing': typeof DashboardBillingRoute
-  '/dashboard/chat': typeof DashboardChatRoute
-  '/dashboard/integrations': typeof DashboardIntegrationsRoute
-  '/dashboard/settings': typeof DashboardSettingsRoute
-  '/dashboard': typeof DashboardIndexRoute
+  '/admin': typeof ProtectedAdminRoute
+  '/features': typeof ProtectedFeaturesRoute
+  '/hello': typeof ProtectedHelloRoute
+  '/pricing': typeof ProtectedPricingRoute
+  '/dashboard/analytics': typeof ProtectedDashboardAnalyticsRoute
+  '/dashboard/billing': typeof ProtectedDashboardBillingRoute
+  '/dashboard/chat': typeof ProtectedDashboardChatRoute
+  '/dashboard/integrations': typeof ProtectedDashboardIntegrationsRoute
+  '/dashboard/settings': typeof ProtectedDashboardSettingsRoute
+  '/dashboard': typeof ProtectedDashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
-  '/dashboard': typeof DashboardRouteWithChildren
-  '/features': typeof FeaturesRoute
+  '/_protected': typeof ProtectedRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
-  '/hello': typeof HelloRoute
-  '/hi': typeof HiRoute
   '/login': typeof LoginRoute
-  '/pricing': typeof PricingRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/dashboard/analytics': typeof DashboardAnalyticsRoute
-  '/dashboard/billing': typeof DashboardBillingRoute
-  '/dashboard/chat': typeof DashboardChatRoute
-  '/dashboard/integrations': typeof DashboardIntegrationsRoute
-  '/dashboard/settings': typeof DashboardSettingsRoute
-  '/dashboard/': typeof DashboardIndexRoute
+  '/_protected/admin': typeof ProtectedAdminRoute
+  '/_protected/dashboard': typeof ProtectedDashboardRouteWithChildren
+  '/_protected/features': typeof ProtectedFeaturesRoute
+  '/_protected/hello': typeof ProtectedHelloRoute
+  '/_protected/pricing': typeof ProtectedPricingRoute
+  '/_protected/dashboard/analytics': typeof ProtectedDashboardAnalyticsRoute
+  '/_protected/dashboard/billing': typeof ProtectedDashboardBillingRoute
+  '/_protected/dashboard/chat': typeof ProtectedDashboardChatRoute
+  '/_protected/dashboard/integrations': typeof ProtectedDashboardIntegrationsRoute
+  '/_protected/dashboard/settings': typeof ProtectedDashboardSettingsRoute
+  '/_protected/dashboard/': typeof ProtectedDashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/reset-password'
     | '/admin'
     | '/dashboard'
     | '/features'
-    | '/forgot-password'
     | '/hello'
-    | '/hi'
-    | '/login'
     | '/pricing'
-    | '/reset-password'
     | '/dashboard/analytics'
     | '/dashboard/billing'
     | '/dashboard/chat'
@@ -183,14 +183,13 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/forgot-password'
+    | '/login'
+    | '/reset-password'
     | '/admin'
     | '/features'
-    | '/forgot-password'
     | '/hello'
-    | '/hi'
-    | '/login'
     | '/pricing'
-    | '/reset-password'
     | '/dashboard/analytics'
     | '/dashboard/billing'
     | '/dashboard/chat'
@@ -200,33 +199,28 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/admin'
-    | '/dashboard'
-    | '/features'
+    | '/_protected'
     | '/forgot-password'
-    | '/hello'
-    | '/hi'
     | '/login'
-    | '/pricing'
     | '/reset-password'
-    | '/dashboard/analytics'
-    | '/dashboard/billing'
-    | '/dashboard/chat'
-    | '/dashboard/integrations'
-    | '/dashboard/settings'
-    | '/dashboard/'
+    | '/_protected/admin'
+    | '/_protected/dashboard'
+    | '/_protected/features'
+    | '/_protected/hello'
+    | '/_protected/pricing'
+    | '/_protected/dashboard/analytics'
+    | '/_protected/dashboard/billing'
+    | '/_protected/dashboard/chat'
+    | '/_protected/dashboard/integrations'
+    | '/_protected/dashboard/settings'
+    | '/_protected/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRoute
-  DashboardRoute: typeof DashboardRouteWithChildren
-  FeaturesRoute: typeof FeaturesRoute
+  ProtectedRoute: typeof ProtectedRouteWithChildren
   ForgotPasswordRoute: typeof ForgotPasswordRoute
-  HelloRoute: typeof HelloRoute
-  HiRoute: typeof HiRoute
   LoginRoute: typeof LoginRoute
-  PricingRoute: typeof PricingRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
@@ -239,32 +233,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/pricing': {
-      id: '/pricing'
-      path: '/pricing'
-      fullPath: '/pricing'
-      preLoaderRoute: typeof PricingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/hi': {
-      id: '/hi'
-      path: '/hi'
-      fullPath: '/hi'
-      preLoaderRoute: typeof HiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/hello': {
-      id: '/hello'
-      path: '/hello'
-      fullPath: '/hello'
-      preLoaderRoute: typeof HelloRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -274,25 +247,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/features': {
-      id: '/features'
-      path: '/features'
-      fullPath: '/features'
-      preLoaderRoute: typeof FeaturesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
+    '/_protected': {
+      id: '/_protected'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ProtectedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -302,83 +261,132 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard/': {
-      id: '/dashboard/'
+    '/_protected/pricing': {
+      id: '/_protected/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof ProtectedPricingRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/hello': {
+      id: '/_protected/hello'
+      path: '/hello'
+      fullPath: '/hello'
+      preLoaderRoute: typeof ProtectedHelloRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/features': {
+      id: '/_protected/features'
+      path: '/features'
+      fullPath: '/features'
+      preLoaderRoute: typeof ProtectedFeaturesRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/dashboard': {
+      id: '/_protected/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof ProtectedDashboardRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/admin': {
+      id: '/_protected/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof ProtectedAdminRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/dashboard/': {
+      id: '/_protected/dashboard/'
       path: '/'
       fullPath: '/dashboard/'
-      preLoaderRoute: typeof DashboardIndexRouteImport
-      parentRoute: typeof DashboardRoute
+      preLoaderRoute: typeof ProtectedDashboardIndexRouteImport
+      parentRoute: typeof ProtectedDashboardRoute
     }
-    '/dashboard/settings': {
-      id: '/dashboard/settings'
+    '/_protected/dashboard/settings': {
+      id: '/_protected/dashboard/settings'
       path: '/settings'
       fullPath: '/dashboard/settings'
-      preLoaderRoute: typeof DashboardSettingsRouteImport
-      parentRoute: typeof DashboardRoute
+      preLoaderRoute: typeof ProtectedDashboardSettingsRouteImport
+      parentRoute: typeof ProtectedDashboardRoute
     }
-    '/dashboard/integrations': {
-      id: '/dashboard/integrations'
+    '/_protected/dashboard/integrations': {
+      id: '/_protected/dashboard/integrations'
       path: '/integrations'
       fullPath: '/dashboard/integrations'
-      preLoaderRoute: typeof DashboardIntegrationsRouteImport
-      parentRoute: typeof DashboardRoute
+      preLoaderRoute: typeof ProtectedDashboardIntegrationsRouteImport
+      parentRoute: typeof ProtectedDashboardRoute
     }
-    '/dashboard/chat': {
-      id: '/dashboard/chat'
+    '/_protected/dashboard/chat': {
+      id: '/_protected/dashboard/chat'
       path: '/chat'
       fullPath: '/dashboard/chat'
-      preLoaderRoute: typeof DashboardChatRouteImport
-      parentRoute: typeof DashboardRoute
+      preLoaderRoute: typeof ProtectedDashboardChatRouteImport
+      parentRoute: typeof ProtectedDashboardRoute
     }
-    '/dashboard/billing': {
-      id: '/dashboard/billing'
+    '/_protected/dashboard/billing': {
+      id: '/_protected/dashboard/billing'
       path: '/billing'
       fullPath: '/dashboard/billing'
-      preLoaderRoute: typeof DashboardBillingRouteImport
-      parentRoute: typeof DashboardRoute
+      preLoaderRoute: typeof ProtectedDashboardBillingRouteImport
+      parentRoute: typeof ProtectedDashboardRoute
     }
-    '/dashboard/analytics': {
-      id: '/dashboard/analytics'
+    '/_protected/dashboard/analytics': {
+      id: '/_protected/dashboard/analytics'
       path: '/analytics'
       fullPath: '/dashboard/analytics'
-      preLoaderRoute: typeof DashboardAnalyticsRouteImport
-      parentRoute: typeof DashboardRoute
+      preLoaderRoute: typeof ProtectedDashboardAnalyticsRouteImport
+      parentRoute: typeof ProtectedDashboardRoute
     }
   }
 }
 
-interface DashboardRouteChildren {
-  DashboardAnalyticsRoute: typeof DashboardAnalyticsRoute
-  DashboardBillingRoute: typeof DashboardBillingRoute
-  DashboardChatRoute: typeof DashboardChatRoute
-  DashboardIntegrationsRoute: typeof DashboardIntegrationsRoute
-  DashboardSettingsRoute: typeof DashboardSettingsRoute
-  DashboardIndexRoute: typeof DashboardIndexRoute
+interface ProtectedDashboardRouteChildren {
+  ProtectedDashboardAnalyticsRoute: typeof ProtectedDashboardAnalyticsRoute
+  ProtectedDashboardBillingRoute: typeof ProtectedDashboardBillingRoute
+  ProtectedDashboardChatRoute: typeof ProtectedDashboardChatRoute
+  ProtectedDashboardIntegrationsRoute: typeof ProtectedDashboardIntegrationsRoute
+  ProtectedDashboardSettingsRoute: typeof ProtectedDashboardSettingsRoute
+  ProtectedDashboardIndexRoute: typeof ProtectedDashboardIndexRoute
 }
 
-const DashboardRouteChildren: DashboardRouteChildren = {
-  DashboardAnalyticsRoute: DashboardAnalyticsRoute,
-  DashboardBillingRoute: DashboardBillingRoute,
-  DashboardChatRoute: DashboardChatRoute,
-  DashboardIntegrationsRoute: DashboardIntegrationsRoute,
-  DashboardSettingsRoute: DashboardSettingsRoute,
-  DashboardIndexRoute: DashboardIndexRoute,
+const ProtectedDashboardRouteChildren: ProtectedDashboardRouteChildren = {
+  ProtectedDashboardAnalyticsRoute: ProtectedDashboardAnalyticsRoute,
+  ProtectedDashboardBillingRoute: ProtectedDashboardBillingRoute,
+  ProtectedDashboardChatRoute: ProtectedDashboardChatRoute,
+  ProtectedDashboardIntegrationsRoute: ProtectedDashboardIntegrationsRoute,
+  ProtectedDashboardSettingsRoute: ProtectedDashboardSettingsRoute,
+  ProtectedDashboardIndexRoute: ProtectedDashboardIndexRoute,
 }
 
-const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
-  DashboardRouteChildren,
+const ProtectedDashboardRouteWithChildren =
+  ProtectedDashboardRoute._addFileChildren(ProtectedDashboardRouteChildren)
+
+interface ProtectedRouteChildren {
+  ProtectedAdminRoute: typeof ProtectedAdminRoute
+  ProtectedDashboardRoute: typeof ProtectedDashboardRouteWithChildren
+  ProtectedFeaturesRoute: typeof ProtectedFeaturesRoute
+  ProtectedHelloRoute: typeof ProtectedHelloRoute
+  ProtectedPricingRoute: typeof ProtectedPricingRoute
+}
+
+const ProtectedRouteChildren: ProtectedRouteChildren = {
+  ProtectedAdminRoute: ProtectedAdminRoute,
+  ProtectedDashboardRoute: ProtectedDashboardRouteWithChildren,
+  ProtectedFeaturesRoute: ProtectedFeaturesRoute,
+  ProtectedHelloRoute: ProtectedHelloRoute,
+  ProtectedPricingRoute: ProtectedPricingRoute,
+}
+
+const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
+  ProtectedRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRoute,
-  DashboardRoute: DashboardRouteWithChildren,
-  FeaturesRoute: FeaturesRoute,
+  ProtectedRoute: ProtectedRouteWithChildren,
   ForgotPasswordRoute: ForgotPasswordRoute,
-  HelloRoute: HelloRoute,
-  HiRoute: HiRoute,
   LoginRoute: LoginRoute,
-  PricingRoute: PricingRoute,
   ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport

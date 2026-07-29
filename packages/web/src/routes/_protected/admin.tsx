@@ -8,7 +8,7 @@ interface User {
   [key: string]: unknown;
 }
 
-export const Route = createFileRoute('/admin')({
+export const Route = createFileRoute('/_protected/admin')({
   component: AdminUsersPage,
 });
 

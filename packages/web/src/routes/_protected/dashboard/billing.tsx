@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Check, AlertCircle } from 'lucide-react'
 
-export const Route = createFileRoute('/dashboard/billing')({
+export const Route = createFileRoute('/_protected/dashboard/billing')({
   component: Billing,
 })
 
