@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Navbar } from '@/components/navbar'
 import { Theme } from "@radix-ui/themes";
 import { ToastContainer } from 'react-toast'
+import { authClient } from '@/lib/auth-client';
 
 
 
@@ -36,11 +37,14 @@ export const Route = createRootRoute({
       { rel: 'stylesheet', href: '/styles/global.css' }
     ],
   }),
-  component: RootComponent,
-  // beforeLoad: async () => {
-  //     throw redirect({to: '/_protected/dashboard'});
-  //   },
-  loader: () => getThemeServerFn(),
+  beforeLoad: async () => {
+      const session = await authClient.getSession();
+      return {session : session.data?.session || null};
+    },
+    component: RootComponent,
+    loader: () => {
+      return getThemeServerFn();
+    },
 })
 
 const Providers = ({ children }: Readonly<{ children: ReactNode }>) => {
