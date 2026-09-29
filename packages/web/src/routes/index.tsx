@@ -1,10 +1,18 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ArrowRight, CheckCircle2, Zap, Users, BarChart3 } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
+  beforeLoad: async ({ context }) => {
+    // If user is already logged in, redirect to dashboard
+    if (context.session) {
+      throw redirect({ to: '/dashboard' })
+    } else {
+        throw redirect({ to: '/login' })
+    }
+  },
   component: Landing,
 })
 
@@ -97,40 +105,41 @@ function Landing() {
               }`}
             >
               <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
-              <p className="text-3xl font-bold mb-1">{plan.price}</p>
-              <p className="text-gray-400 mb-6">{plan.period}</p>
-              <ul className="space-y-4 mb-8">
+              <p className="text-3xl font-bold mb-2">
+                {plan.price}
+                <span className="text-sm text-gray-400"> {plan.period}</span>
+              </p>
+              <ul className="space-y-3 mb-6">
                 {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-3">
-                    <CheckCircle2 size={16} className="text-green-400 flex-shrink-0" />
-                    <span className="text-gray-300">{feature}</span>
+                  <li key={feature} className="flex items-center gap-2 text-gray-300">
+                    <CheckCircle2 size={18} className="text-green-400" />
+                    {feature}
                   </li>
                 ))}
               </ul>
-              <Link to="/login">
-                <Button className="w-full">Get Started</Button>
-              </Link>
+              <Button
+                className="w-full"
+                variant={plan.name === 'Professional' ? 'default' : 'outline'}
+              >
+                Choose Plan
+              </Button>
             </Card>
           ))}
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="px-6 md:px-16 py-20 text-center">
+      <section className="flex flex-col items-center justify-center px-6 py-20 text-center">
         <h2 className="text-3xl font-bold mb-6">Ready to get started?</h2>
-        <p className="text-xl text-gray-400 mb-8">Join thousands of teams already using PlayGround</p>
+        <p className="text-xl text-gray-400 mb-8 max-w-2xl">
+          Join thousands of teams already using PlayGround to manage their business.
+        </p>
         <Link to="/login">
-          <Button size="lg" className="flex items-center gap-2 mx-auto">
-            Start Free Trial
-            <ArrowRight size={20} />
+          <Button size="lg" className="gap-2">
+            Get Started <ArrowRight size={20} />
           </Button>
         </Link>
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-800 px-6 md:px-16 py-12 text-center text-gray-400">
-        <p>&copy; 2026 PlayGround. All rights reserved.</p>
-      </footer>
     </div>
   )
 }
