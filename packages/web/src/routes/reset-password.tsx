@@ -1,8 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { GalleryVerticalEnd } from "lucide-react"
 import { ResetPasswordPage } from "@/features/login/reset-password";
 
 export const Route = createFileRoute("/reset-password")({
+  beforeLoad: async ({ context }) => {
+    // If user is already logged in, redirect to dashboard
+    if (context.session) {
+      throw redirect({ to: '/dashboard' })
+    }
+  },
   component: RouteComponent,
   validateSearch: (search: Record<string, unknown>) => {
     return {
